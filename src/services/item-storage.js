@@ -1,21 +1,26 @@
 export class ItemStorage {
-  static setStaticProperties() {
-    ItemStorage.instanceCounter = ItemStorage.instanceCounter || 0;
-  }
+  // static setStaticProperties() {
+  //   ItemStorage.instanceCounter = ItemStorage.instanceCounter || 0;
+  // }
 
   constructor(storage) {
-    ItemStorage.setStaticProperties();
-
-    if (ItemStorage.instanceCounter === 1) {
-      throw new Error('ItemStorage already has instance');
+    if (storage) {
+      this.storage = storage;
     } else {
-      if (storage) {
-        ++ItemStorage.instanceCounter;
-        this.storage = storage;
-      } else {
-        throw new Error('ItemStorage constructor expected a storage parameter');
-      }
+      throw new Error('ItemStorage constructor expected a storage parameter');
     }
+    // ItemStorage.setStaticProperties();
+    //
+    // if (ItemStorage.instanceCounter === 1) {
+    //   throw new Error('ItemStorage already has instance');
+    // } else {
+    //   if (storage) {
+    //     ++ItemStorage.instanceCounter;
+    //     this.storage = storage;
+    //   } else {
+    //     throw new Error('ItemStorage constructor expected a storage parameter');
+    //   }
+    // }
 
     if (!this.getIDCounter()) {
       this.storage.setItem('IDCounter', 0);
