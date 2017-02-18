@@ -7,8 +7,6 @@ import {
 } from 'react-router';
 import {
   EnterData,
-  ListItem,
-  List,
   Menu,
   Test
 } from './components';

@@ -6,8 +6,8 @@ let storage = new ItemStorage(localStorage);
 
 export class EnterData extends React.Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClearAll = this.handleClearAll.bind(this);
     this.state = {
@@ -38,10 +38,8 @@ export class EnterData extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="item"> Item </label>
-          <input name="item" type="string" id="item"/>
-          <label htmlFor="sum"> Sum </label>
-          <input name="sum" type="number" id= "sum"/>
+          <input name="item" type="string" id="item" placeholder="Enter item"/>
+          <input name="sum" type="number" id= "sum" placeholder="Enter sum"/>
           <button>Send</button>
           <button type="button" onClick={this.handleClearAll}>Clear All</button>
         </form>
