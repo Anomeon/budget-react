@@ -1,6 +1,6 @@
 # budget-react
 
-## Install
+## Install && run
 
 1. `yarn`
 
