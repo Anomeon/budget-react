@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {ItemStorage} from './services/item-storage';
+import { Router, Route, Link, hashHistory } from 'react-router';
+import { ItemStorage } from './services/item-storage';
 
 let storage = new ItemStorage(localStorage);
 
@@ -79,7 +80,34 @@ class ListComponent extends React.Component {
   }
 };
 
+class MenuComponent extends React.Component {
+  render() {
+    return (
+      <div>
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/test">Test</Link>
+        </nav>
+        {this.props.children}
+      </div>
+    );
+  }
+};
+
+class TestComponent extends React.Component {
+  render() {
+    return (
+      <h2>Тест!</h2>
+    );
+  }
+};
+
 ReactDOM.render(
-  <EnterDataComponent/>,
+  <Router history={hashHistory}>
+    <Route component={MenuComponent}>
+      <Route path="/" component={EnterDataComponent}/>
+      <Route path="test" component={TestComponent}/>
+    </Route>
+  </Router>,
   document.getElementById('app')
 );
