@@ -2,18 +2,18 @@ import React from 'react';
 import {ItemStorage} from '../services/item-storage';
 import {List} from './index';
 
-let storage = new ItemStorage(localStorage);
-
 export class EnterData extends React.Component {
 
   constructor() {
     super();
+    this.storage = new ItemStorage(localStorage);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClearAll = this.handleClearAll.bind(this);
     this.focus = this.focus.bind(this);
     this.state = {
-      items: storage.getItems('items', true)
+      items: this.storage.getItems('items', true)
     }
+    this.categories = this.storage.getItems('categories', true)
   }
 
   handleSubmit(e) {
@@ -21,10 +21,12 @@ export class EnterData extends React.Component {
     let formData = {};
     Array.prototype.slice.call(document.querySelectorAll('input'))
       .forEach(el => formData[el.name] = el.value);
-    storage.addItem('items', formData);
+    let select = document.querySelector('select')
+    formData[select.name] = select.value;
+    this.storage.addItem('items', formData);
     e.target.reset();
     this.focus();
-    this.setState({items: storage.getItems('items', true)})
+    this.setState({items: this.storage.getItems('items', true)})
   }
 
   focus() {
@@ -32,12 +34,12 @@ export class EnterData extends React.Component {
   }
 
   handleClearAll() {
-    storage.deleteItems(
+    this.storage.deleteItems(
       this.state.items.map((item) => {
         return item.id;
       })
     );
-    this.setState({items: storage.getItems('items', true)})
+    this.setState({items: this.storage.getItems('items', true)})
   }
 
   render() {
@@ -47,6 +49,13 @@ export class EnterData extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <input name="item" type="string" id="item" placeholder="Enter item" autoFocus={true} ref={itemInput}/>
           <input name="sum" type="number" id= "sum" placeholder="Enter sum"/>
+          <select name="category">
+            {
+              this.categories.map((category) => {
+                return <option key={category.id}>{category.category}</option>
+              })
+            }
+          </select>
           <button>Send</button>
           <button type="button" onClick={this.handleClearAll}>Clear All</button>
         </form>
