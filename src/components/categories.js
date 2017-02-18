@@ -26,7 +26,7 @@ export class Categories extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input type="text" name="category" placeholder="Enter category"/>
+          <input type="text" name="category" placeholder="Enter category" autoFocus={true}/>
           <button>Add category</button>
         </form>
         <CategoriesList items={this.state.items}/>

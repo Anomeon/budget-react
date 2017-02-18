@@ -12,7 +12,6 @@ import {
   Categories
 } from './components';
 
-
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route component={Menu}>
