@@ -10,6 +10,7 @@ export class EnterData extends React.Component {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClearAll = this.handleClearAll.bind(this);
+    this.focus = this.focus.bind(this);
     this.state = {
       items: storage.getItems('items', true)
     }
@@ -22,7 +23,12 @@ export class EnterData extends React.Component {
       .forEach(el => formData[el.name] = el.value);
     storage.addItem('items', formData);
     e.target.reset();
+    this.focus();
     this.setState({items: storage.getItems('items', true)})
+  }
+
+  focus() {
+    this.itemInput.focus();
   }
 
   handleClearAll() {
@@ -35,10 +41,11 @@ export class EnterData extends React.Component {
   }
 
   render() {
+    let itemInput = (input) => { this.itemInput = input; }
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input name="item" type="string" id="item" placeholder="Enter item"/>
+          <input name="item" type="string" id="item" placeholder="Enter item" autoFocus={true} ref={itemInput}/>
           <input name="sum" type="number" id= "sum" placeholder="Enter sum"/>
           <button>Send</button>
           <button type="button" onClick={this.handleClearAll}>Clear All</button>
