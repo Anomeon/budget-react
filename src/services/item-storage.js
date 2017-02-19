@@ -27,14 +27,19 @@ export class ItemStorage {
     }
   }
 
-  getItems(table, isArray, state) {
+  getItems(table, isArray, category) {
     let items = JSON.parse(this.storage.getItem(table) || '{}');
     let collection;
     if (isArray) {
       collection = [];
       for (let key in items) {
         let item = items[key];
-        if (item.state === state) {
+        if (category) {
+          if (item.category === category) {
+            item.id = key;
+            collection.push(item);
+          }
+        } else {
           item.id = key;
           collection.push(item);
         }
@@ -42,7 +47,13 @@ export class ItemStorage {
     } else {
       collection = {};
       for (let key in items) {
-        if (items[key].state === state) { collection[key] = items[key]; }
+        if (category) {
+          if (items[key].category === category) {
+            collection[key] = items[key];
+          }
+        } else {
+          collection[key] = items[key];
+        }
       }
     }
     return collection;

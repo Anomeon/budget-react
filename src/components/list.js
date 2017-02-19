@@ -1,12 +1,16 @@
 import React from 'react';
+import {Link} from 'react-router';
 import {ListItem} from './index';
+import {ItemStorage} from '../services';
 
 export class List extends React.Component {
 
   constructor() {
     super();
+    this.storage = new ItemStorage(localStorage);
     this.state = {
-      searchString: ''
+      searchString: '',
+      categories: this.storage.getItems('categories', true)
     };
     this.handleChange = this.handleChange.bind(this);
   }

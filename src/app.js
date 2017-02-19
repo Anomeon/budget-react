@@ -16,6 +16,7 @@ ReactDOM.render(
   <Router history={hashHistory}>
     <Route component={Menu}>
       <Route path="/" component={EnterData}/>
+      <Route path="/items/:category" component={EnterData}/>
       <Route path="test" component={Test}/>
       <Route path="categories" component={Categories}/>
     </Route>
