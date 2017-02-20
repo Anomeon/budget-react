@@ -1,0 +1,28 @@
+exports[`test renders correctly 1`] = `
+<div>
+  <br />
+  <form>
+    <input
+      onChange={[Function]}
+      placeholder="Type to search.." />
+  </form>
+  <ul>
+    <li>
+      <div>
+        <div>
+          item: 
+          test
+        </div>
+        <div>
+          sum: 
+          50
+        </div>
+        <div>
+          category: 
+          test
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;

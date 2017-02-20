@@ -1,0 +1,70 @@
+exports[`test renders correctly 1`] = `
+<div>
+  <form
+    onSubmit={[Function]}>
+    <input
+      autoFocus={true}
+      id="item"
+      name="item"
+      placeholder="Enter item"
+      type="string" />
+    <input
+      id="sum"
+      name="sum"
+      placeholder="Enter sum"
+      type="number" />
+    <select
+      name="category">
+      <option>
+        test
+      </option>
+    </select>
+    <button>
+      Send
+    </button>
+    <button
+      onClick={[Function]}
+      type="button">
+      Clear All
+    </button>
+  </form>
+  <nav>
+    <a
+      onClick={[Function]}
+      style={Object {}}>
+      All
+    </a>
+    <a
+      onClick={[Function]}
+      style={Object {}}>
+      Test
+    </a>
+  </nav>
+  <div>
+    <br />
+    <form>
+      <input
+        onChange={[Function]}
+        placeholder="Type to search.." />
+    </form>
+    <ul>
+      <li>
+        <div>
+          <div>
+            item: 
+            test
+          </div>
+          <div>
+            sum: 
+            50
+          </div>
+          <div>
+            category: 
+            test
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+`;

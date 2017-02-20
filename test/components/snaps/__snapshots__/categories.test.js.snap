@@ -1,0 +1,20 @@
+exports[`test renders correctly 1`] = `
+<div>
+  <form
+    onSubmit={[Function]}>
+    <input
+      autoFocus={true}
+      name="category"
+      placeholder="Enter category"
+      type="text" />
+    <button>
+      Add category
+    </button>
+  </form>
+  <ul>
+    <li>
+      test
+    </li>
+  </ul>
+</div>
+`;
