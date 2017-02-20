@@ -1,6 +1,6 @@
 import React from 'react';
 import {CategoriesList} from './index';
-import {ItemStorage} from '../services/item-storage';
+import {ItemStorage} from '../services';
 
 export class Categories extends React.Component {
   constructor() {

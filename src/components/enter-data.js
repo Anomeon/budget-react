@@ -1,5 +1,5 @@
 import React from 'react';
-import {ItemStorage} from '../services/item-storage';
+import {ItemStorage} from '../services';
 import {List} from './index';
 import {Link} from 'react-router';
 
@@ -14,9 +14,8 @@ export class EnterData extends React.Component {
     this.focus = this.focus.bind(this);
     this.state = {
       items: this.storage.getItems('items', true)
-
-    }
-    this.categories = this.storage.getItems('categories', true)
+    };
+    this.categories = this.storage.getItems('categories', true);
   }
 
   handleSubmit(e) {
@@ -96,7 +95,7 @@ export class EnterData extends React.Component {
             })
           }
         </nav>
-        <List items={this.state.items} rout={this.props.params.category}/>
+        <List items={this.state.items}/>
       </div>
     );
   }

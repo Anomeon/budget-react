@@ -8,7 +8,7 @@ import {
 import {
   EnterData,
   Menu,
-  Test,
+  Report,
   Categories
 } from './components';
 
@@ -17,7 +17,7 @@ ReactDOM.render(
     <Route component={Menu}>
       <Route path="/" component={EnterData}/>
       <Route path="/items/:category" component={EnterData}/>
-      <Route path="test" component={Test}/>
+      <Route path="test" component={Report}/>
       <Route path="categories" component={Categories}/>
     </Route>
   </Router>,

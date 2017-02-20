@@ -4,7 +4,7 @@ import Faux from 'react-faux-dom';
 import {Piechart} from '../services';
 
 
-export const Test = React.createClass({
+export const Report = React.createClass({
   mixins: [
     Faux.mixins.core,
     Faux.mixins.anim
