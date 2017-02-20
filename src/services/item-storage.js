@@ -59,9 +59,9 @@ export class ItemStorage {
     return collection;
   }
 
-  deleteItems(itemsArray) {
-    let items = this.getItems();
-    itemsArray.forEach((id) => {
+  deleteItems(table, itemsIdsArray) {
+    let items = this.getItems(table);
+    itemsIdsArray.forEach((id) => {
       delete items[id];
     });
     this.storage.setItem('items', JSON.stringify(items));

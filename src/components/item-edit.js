@@ -7,6 +7,7 @@ export class ItemEdit extends React.Component {
     this.storage = new ItemStorage(localStorage);
     this.categories = this.storage.getItems('categories', true);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentWillMount() {
@@ -25,6 +26,11 @@ export class ItemEdit extends React.Component {
     window.location.hash = '#';
   }
 
+  handleDelete(e) {
+    this.storage.deleteItems('items', [this.itemId]);
+    window.location.hash = '#';
+  }
+
   render() {
     const {item, sum, category} = this.item;
     return (
@@ -39,6 +45,7 @@ export class ItemEdit extends React.Component {
           }
         </select>
         <button type="submit">Save</button>
+        <button onClick={this.handleDelete} type="button">Delete</button>
       </form>
     );
   }

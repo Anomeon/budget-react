@@ -31,11 +31,17 @@ export class EnterData extends React.Component {
   }
 
   updateState() {
+    let items = this.storage.getItems('items', true);
+    if (items.length !== 0) {
+      items = items
+                .map((item) => { return parseFloat(item.sum) })
+                .reduce((prev, curr) => { return prev + curr }) * -1;
+    } else {
+      items = 0;
+    }
     return {
       items: this.storage.getItems('items', true, this.category),
-      balance: this.storage.getItems('items', true)
-                .map((item) => { return parseInt(item.sum) })
-                .reduce((prev, curr) => { return prev + curr }) * -1
+      balance: items
     }
   }
 
