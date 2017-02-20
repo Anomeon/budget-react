@@ -12,5 +12,10 @@ exports[`test renders correctly 1`] = `
     category: 
     test
   </div>
+  <a
+    onClick={[Function]}
+    style={Object {}}>
+    Edit
+  </a>
 </div>
 `;
