@@ -11,11 +11,10 @@ export class EnterData extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClearAll = this.handleClearAll.bind(this);
     this.handleCategoryClick = this.handleCategoryClick.bind(this);
+    this.updateState = this.updateState.bind(this);
     this.focus = this.focus.bind(this);
-    this.state = {
-      items: this.storage.getItems('items', true)
-    };
     this.categories = this.storage.getItems('categories', true);
+    this.state = this.updateState();
   }
 
   handleSubmit(e) {
@@ -28,7 +27,16 @@ export class EnterData extends React.Component {
     this.storage.addItem('items', formData);
     e.target.reset();
     this.focus();
-    this.setState({items: this.storage.getItems('items', true, this.category)})
+    this.setState(this.updateState())
+  }
+
+  updateState() {
+    return {
+      items: this.storage.getItems('items', true, this.category),
+      balance: this.storage.getItems('items', true)
+                .map((item) => { return parseInt(item.sum) })
+                .reduce((prev, curr) => { return prev + curr }) * -1
+    }
   }
 
   focus() {
@@ -41,22 +49,18 @@ export class EnterData extends React.Component {
         return item.id;
       })
     );
-    this.setState({items: this.storage.getItems('items', true, this.category)})
+    this.setState(this.updateState())
   }
 
   componentWillMount() {
     this.category = this.props.params.category;
-    this.setState({
-      items: this.storage.getItems('items', true, this.category)
-    });
+    this.setState({items: this.storage.getItems('items', true, this.category)});
   }
 
   handleCategoryClick() {
     setTimeout(()=>{
       this.category = this.props.params.category;
-      this.setState({
-        items: this.storage.getItems('items', true, this.category)
-      });
+      this.setState({items: this.storage.getItems('items', true, this.category)});
     })
   }
 
@@ -83,6 +87,7 @@ export class EnterData extends React.Component {
           <button>Send</button>
           <button type="button" onClick={this.handleClearAll}>Clear All</button>
         </form>
+        <div>Total: {this.state.balance}</div>
         <nav>
           <Link to='/' onClick={this.handleCategoryClick}>All</Link>
           {
