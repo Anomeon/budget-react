@@ -1,13 +1,15 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 export class ListItem extends React.Component {
   render() {
-    const {item, sum, category} = this.props.item;
+    const {id, item, sum, category} = this.props.item;
     return (
       <div>
         <div>item: {item}</div>
         <div>sum: {sum}</div>
         <div>category: {category}</div>
+        <Link to={`items\/${id}\/edit`}>Edit</Link>
       </div>
     );
   }

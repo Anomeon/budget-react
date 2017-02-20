@@ -5,3 +5,4 @@ export {Menu} from './menu';
 export {Report} from './report';
 export {Categories} from './categories';
 export {CategoriesList} from './categories-list';
+export {ItemEdit} from './item-edit';

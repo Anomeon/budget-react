@@ -9,7 +9,8 @@ import {
   EnterData,
   Menu,
   Report,
-  Categories
+  Categories,
+  ItemEdit
 } from './components';
 
 ReactDOM.render(
@@ -17,6 +18,7 @@ ReactDOM.render(
     <Route component={Menu}>
       <Route path="/" component={EnterData}/>
       <Route path="/items/:category" component={EnterData}/>
+      <Route path="/items/:id/edit" component={ItemEdit}/>
       <Route path="test" component={Report}/>
       <Route path="categories" component={Categories}/>
     </Route>

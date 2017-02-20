@@ -75,9 +75,9 @@ export class ItemStorage {
     return {[IDCounter]: itemObject};
   }
 
-  updateItemState(id, state) {
-    let items = this.getItems();
-    items[id].state = state;
+  updateItem(table, id, newItem) {
+    let items = this.getItems(table);
+    items[id] = newItem;
     this.storage.setItem('items', JSON.stringify(items));
   }
 
