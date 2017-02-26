@@ -7,7 +7,7 @@ export class ListItem extends React.Component {
     return (
       <div>
         <div>item: {item}</div>
-        <div>sum: {sum}</div>
+        <div>sum: {Math.abs(sum)}</div>
         <div>category: {category}</div>
         <Link to={`items\/${id}\/edit`}>Edit</Link>
       </div>

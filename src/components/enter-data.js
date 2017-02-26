@@ -20,7 +20,7 @@ export class EnterData extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     let formData = {};
-    Array.prototype.slice.call(document.querySelectorAll('input'))
+    Array.prototype.slice.call(e.target.querySelectorAll('input'))
       .forEach(el => formData[el.name] = el.value);
     let select = document.querySelector('select')
     formData[select.name] = select.value;
