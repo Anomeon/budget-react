@@ -12,9 +12,12 @@ export class EnterData extends React.Component {
     this.handleClearAll = this.handleClearAll.bind(this);
     this.handleCategoryClick = this.handleCategoryClick.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
     this.focus = this.focus.bind(this);
-    this.categories = this.storage.getItems('categories', true);
-    this.state = this.updateState();
+
+    let categories = {categories: this.storage.getItems('categories', true)};
+    this.state = (Object.assign(this.updateState(), categories));
   }
 
   handleSubmit(e) {
@@ -50,12 +53,9 @@ export class EnterData extends React.Component {
   }
 
   handleClearAll() {
-    this.storage.deleteItems(
-      this.state.items.map((item) => {
-        return item.id;
-      })
-    );
-    this.setState(this.updateState())
+    this.storage.storage.clear();
+    let categories = {categories: this.storage.getItems('categories', true)};
+    this.setState(Object.assign(this.updateState(), categories));
   }
 
   componentWillMount() {
@@ -68,6 +68,45 @@ export class EnterData extends React.Component {
       this.category = this.props.params.category;
       this.setState({items: this.storage.getItems('items', true, this.category)});
     })
+  }
+
+  handleDownload(e) {
+    let json = JSON.stringify(this.storage.storage)
+    let blob = new Blob([json], {type: "application/json"});
+    let url  = URL.createObjectURL(blob);
+    let a = e.target;
+    a.download = `backup_${Date.now()}.json`;
+    a.href = url;
+  }
+
+  handleUpload(e) {
+    e.preventDefault();
+    let input = e.target.querySelector('input');
+    let fr = new FileReader();
+
+    fr.onload = (e) => {
+      let json = JSON.parse(e.target.result);
+      for (let key in json) {
+        this.storage.storage.setItem(key, json[key]);
+      }
+    }
+
+    fr.readAsText(input.files.item(0));
+    e.target.reset();
+    this.storage.storage.clear();
+    setTimeout(() => {
+      let categories = {categories: this.storage.getItems('categories', true)};
+      this.setState(Object.assign(this.updateState(), categories));
+    }, 200)
+  }
+
+  handleUploadCheck(e) {
+    let form = e.target.parentNode;
+    if (form.querySelector('input').files.length !== 0) {
+      form.querySelector('button').removeAttribute('disabled');
+    } else {
+      form.querySelector('button').setAttribute('disabled', '');
+    }
   }
 
   capitalize(str) {
@@ -85,19 +124,24 @@ export class EnterData extends React.Component {
           <input name="sum" type="number" id= "sum" placeholder="Enter sum"/>
           <select name="category">
             {
-              this.categories.map((category) => {
+              this.state.categories.map((category) => {
                 return <option key={category.id}>{category.category}</option>
               })
             }
           </select>
-          <button>Send</button>
+          <button type="submit">Send</button>
           <button type="button" onClick={this.handleClearAll}>Clear All</button>
+        </form>
+        <a href="" onClick={this.handleDownload}>Download data</a>
+        <form onSubmit={this.handleUpload}>
+          <input type="file" onChange={this.handleUploadCheck}/>
+          <button type="submit" disabled>Upload data</button>
         </form>
         <div>Total: {this.state.balance}</div>
         <nav>
           <Link to='/' onClick={this.handleCategoryClick}>All</Link>
           {
-            this.categories.map((category) => {
+            this.state.categories.map((category) => {
               return (
                 <Link key={category.id} to={`items/${category.category}`} onClick={this.handleCategoryClick}>
                   {this.capitalize(category.category)}
