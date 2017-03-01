@@ -25,8 +25,9 @@ export class EnterData extends React.Component {
     let formData = {};
     Array.prototype.slice.call(e.target.querySelectorAll('input'))
       .forEach(el => formData[el.name] = el.value);
-    let select = document.querySelector('select')
-    formData[select.name] = select.value;
+    Array.prototype.slice.call(e.target.querySelectorAll('select'))
+      .forEach(el => formData[el.name] = el.value);
+    if (formData['type'] === 'expenses') formData['sum'] = parseFloat(formData['sum']) * -1;
     this.storage.addItem('items', formData);
     e.target.reset();
     this.focus();
@@ -38,7 +39,7 @@ export class EnterData extends React.Component {
     if (items.length !== 0) {
       items = items
                 .map((item) => { return parseFloat(item.sum) })
-                .reduce((prev, curr) => { return prev + curr }) * -1;
+                .reduce((prev, curr) => { return prev + curr });
     } else {
       items = 0;
     }
@@ -128,6 +129,10 @@ export class EnterData extends React.Component {
                 return <option key={category.id}>{category.category}</option>
               })
             }
+          </select>
+          <select name="type">
+            <option>expenses</option>
+            <option>income</option>
           </select>
           <button type="submit">Send</button>
           <button type="button" onClick={this.handleClearAll}>Clear All</button>

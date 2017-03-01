@@ -20,8 +20,8 @@ export class ItemEdit extends React.Component {
     let formData = {};
     Array.prototype.slice.call(document.querySelectorAll('input'))
       .forEach(el => formData[el.name] = el.value);
-    let select = document.querySelector('select')
-    formData[select.name] = select.value;
+    Array.prototype.slice.call(e.target.querySelectorAll('select'))
+      .forEach(el => formData[el.name] = el.value);
     this.storage.updateItem('items', this.itemId, formData);
     window.location.hash = '#';
   }
@@ -43,6 +43,10 @@ export class ItemEdit extends React.Component {
               return <option key={category.id}>{category.category}</option>
             })
           }
+        </select>
+        <select name="type">
+          <option>expenses</option>
+          <option>income</option>
         </select>
         <button type="submit">Save</button>
         <button onClick={this.handleDelete} type="button">Delete</button>
