@@ -7,18 +7,20 @@ export class Piechart {
 
     // Prepare data
     let categories = {};
-    this.storage.getItems('items', true).forEach((item) => {
-      let category = item.category;
-      if (categories[category]) {
-        categories[category] = categories[category] + parseFloat(item.sum);
-      } else {
-        categories[category] = parseFloat(item.sum);
-      }
-    })
+    this.storage.getItems('items', true)
+      .filter(item => item.type === 'expenses')
+      .forEach((item) => {
+        let category = item.category;
+        if (categories[category]) {
+          categories[category] = categories[category] + parseFloat(item.sum);
+        } else {
+          categories[category] = parseFloat(item.sum);
+        }
+      })
 
     let data = [];
     for(let key in categories) {
-      data.push({category: key, sum: categories[key]});
+      data.push({category: key, sum: Math.abs(categories[key])});
     }
 
 
