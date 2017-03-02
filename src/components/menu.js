@@ -9,6 +9,7 @@ export class Menu extends React.Component {
           <Link to="/">Home</Link>
           <Link to="/test">Test</Link>
           <Link to="/categories">Categories</Link>
+          <Link to="/tags">Tags</Link>
         </nav>
         {this.props.children}
       </div>

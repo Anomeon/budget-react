@@ -17,7 +17,8 @@ export class EnterData extends React.Component {
     this.focus = this.focus.bind(this);
 
     let categories = {categories: this.storage.getItems('categories', true)};
-    this.state = (Object.assign(this.updateState(), categories));
+    let tags = {tags: this.storage.getItems('tags', true)};
+    this.state = (Object.assign(this.updateState(), categories, tags));
   }
 
   handleSubmit(e) {
@@ -25,8 +26,11 @@ export class EnterData extends React.Component {
     let formData = {};
     Array.prototype.slice.call(e.target.querySelectorAll('input'))
       .forEach(el => formData[el.name] = el.value);
-    Array.prototype.slice.call(e.target.querySelectorAll('select'))
+    Array.prototype.slice.call(e.target.querySelectorAll('select:not([name=tags])'))
       .forEach(el => formData[el.name] = el.value);
+    formData['tags'] = [...document.querySelector('[name=tags]').options]
+      .filter(option => option.selected)
+      .map(option => option.value);
     if (formData['type'] === 'expenses') formData['sum'] = parseFloat(formData['sum']) * -1;
     this.storage.addItem('items', formData);
     e.target.reset();
@@ -56,6 +60,7 @@ export class EnterData extends React.Component {
   handleClearAll() {
     this.storage.storage.clear();
     let categories = {categories: this.storage.getItems('categories', true)};
+    let tags = {tags: this.storage.getItems('tags', true)};
     this.setState(Object.assign(this.updateState(), categories));
   }
 
@@ -124,6 +129,7 @@ export class EnterData extends React.Component {
           <input name="item" type="string" id="item" placeholder="Enter item" autoFocus={true} ref={itemInput}/>
           <input name="sum" type="number" id= "sum" placeholder="Enter sum"/>
           <select name="category">
+            <option readOnly defaultValue label=" "></option>
             {
               this.state.categories.map((category) => {
                 return <option key={category.id}>{category.category}</option>
@@ -133,6 +139,13 @@ export class EnterData extends React.Component {
           <select name="type">
             <option>expenses</option>
             <option>income</option>
+          </select>
+          <select name="tags" multiple="true">
+            {
+              this.state.tags.map((tag) => {
+                return <option key={tag.id}>{tag.tag}</option>
+              })
+            }
           </select>
           <button type="submit">Send</button>
           <button type="button" onClick={this.handleClearAll}>Clear All</button>

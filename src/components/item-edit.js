@@ -6,6 +6,7 @@ export class ItemEdit extends React.Component {
     super();
     this.storage = new ItemStorage(localStorage);
     this.categories = this.storage.getItems('categories', true);
+    this.tags = this.storage.getItems('tags', true);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
@@ -20,8 +21,11 @@ export class ItemEdit extends React.Component {
     let formData = {};
     Array.prototype.slice.call(document.querySelectorAll('input'))
       .forEach(el => formData[el.name] = el.value);
-    Array.prototype.slice.call(e.target.querySelectorAll('select'))
+    Array.prototype.slice.call(e.target.querySelectorAll('select:not([name=tags])'))
       .forEach(el => formData[el.name] = el.value);
+    formData['tags'] = [...document.querySelector('[name=tags]').options]
+      .filter(option => option.selected)
+      .map(option => option.value);
     this.storage.updateItem('items', this.itemId, formData);
     window.location.hash = '#';
   }
@@ -38,6 +42,7 @@ export class ItemEdit extends React.Component {
         <input name="item" type="string" id="item" placeholder="Enter item" autoFocus={true} defaultValue={item}/>
         <input name="sum" type="number" id= "sum" placeholder="Enter sum" defaultValue={sum}/>
         <select name="category" defaultValue={category}>
+          <option readOnly defaultValue label=" "></option>
           {
             this.categories.map((category) => {
               return <option key={category.id}>{category.category}</option>
@@ -47,6 +52,13 @@ export class ItemEdit extends React.Component {
         <select name="type">
           <option>expenses</option>
           <option>income</option>
+        </select>
+        <select name="tags" multiple>
+          {
+            this.tags.map((tag) => {
+              return <option key={tag.id}>{tag.tag}</option>
+            })
+          }
         </select>
         <button type="submit">Save</button>
         <button onClick={this.handleDelete} type="button">Delete</button>

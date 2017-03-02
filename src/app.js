@@ -10,7 +10,8 @@ import {
   Menu,
   Report,
   Categories,
-  ItemEdit
+  ItemEdit,
+  Tags
 } from './components';
 
 ReactDOM.render(
@@ -21,6 +22,7 @@ ReactDOM.render(
       <Route path="/items/:id/edit" component={ItemEdit}/>
       <Route path="test" component={Report}/>
       <Route path="categories" component={Categories}/>
+      <Route path="tags" component={Tags}/>
     </Route>
   </Router>,
   document.getElementById('app')
