@@ -19,9 +19,9 @@ export class ItemEdit extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     let formData = {};
-    Array.prototype.slice.call(document.querySelectorAll('input'))
+    [...document.querySelectorAll('input')]
       .forEach(el => formData[el.name] = el.value);
-    Array.prototype.slice.call(e.target.querySelectorAll('select:not([name=tags])'))
+    [...e.target.querySelectorAll('select:not([name=tags])')]
       .forEach(el => formData[el.name] = el.value);
     formData['tags'] = [...document.querySelector('[name=tags]').options]
       .filter(option => option.selected)
@@ -44,9 +44,7 @@ export class ItemEdit extends React.Component {
         <select name="category" defaultValue={category}>
           <option readOnly defaultValue label=" "></option>
           {
-            this.categories.map((category) => {
-              return <option key={category.id}>{category.category}</option>
-            })
+            this.categories.map(category => <option key={category.id}>{category.category}</option>)
           }
         </select>
         <select name="type">
@@ -55,9 +53,7 @@ export class ItemEdit extends React.Component {
         </select>
         <select name="tags" multiple>
           {
-            this.tags.map((tag) => {
-              return <option key={tag.id}>{tag.tag}</option>
-            })
+            this.tags.map(tag => <option key={tag.id}>{tag.tag}</option>)
           }
         </select>
         <button type="submit">Save</button>

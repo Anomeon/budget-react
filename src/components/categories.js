@@ -15,7 +15,7 @@ export class Categories extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     let formData = {};
-    Array.prototype.slice.call(document.querySelectorAll('input'))
+    [...document.querySelectorAll('input')]
       .forEach(el => formData[el.name] = el.value);
     this.storage.addItem('categories', formData);
     e.target.reset();

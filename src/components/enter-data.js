@@ -24,9 +24,9 @@ export class EnterData extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     let formData = {};
-    Array.prototype.slice.call(e.target.querySelectorAll('input'))
+    [...e.target.querySelectorAll('input')]
       .forEach(el => formData[el.name] = el.value);
-    Array.prototype.slice.call(e.target.querySelectorAll('select:not([name=tags])'))
+    [...e.target.querySelectorAll('select:not([name=tags])')]
       .forEach(el => formData[el.name] = el.value);
     formData['tags'] = [...document.querySelector('[name=tags]').options]
       .filter(option => option.selected)
@@ -131,9 +131,7 @@ export class EnterData extends React.Component {
           <select name="category">
             <option readOnly defaultValue label=" "></option>
             {
-              this.state.categories.map((category) => {
-                return <option key={category.id}>{category.category}</option>
-              })
+              this.state.categories.map(category => <option key={category.id}>{category.category}</option>)
             }
           </select>
           <select name="type">
@@ -142,9 +140,7 @@ export class EnterData extends React.Component {
           </select>
           <select name="tags" multiple="true">
             {
-              this.state.tags.map((tag) => {
-                return <option key={tag.id}>{tag.tag}</option>
-              })
+              this.state.tags.map(tag => <option key={tag.id}>{tag.tag}</option>)
             }
           </select>
           <button type="submit">Send</button>
