@@ -36,7 +36,7 @@ export class ItemEdit extends React.Component {
   }
 
   render() {
-    const {item, sum, category} = this.item;
+    const {item, sum, category, tags} = this.item;
     return (
       <form onSubmit={this.handleSubmit}>
         <input name="item" type="string" id="item" placeholder="Enter item" autoFocus={true} defaultValue={item}/>
@@ -51,9 +51,12 @@ export class ItemEdit extends React.Component {
           <option>expenses</option>
           <option>income</option>
         </select>
-        <select name="tags" multiple>
+        <select name="tags" multiple defaultValue={tags}>
           {
-            this.tags.map(tag => <option key={tag.id}>{tag.tag}</option>)
+            this.tags.map(tag =>
+              <option key={tag.id}>
+                {tag.tag}
+              </option>)
           }
         </select>
         <button type="submit">Save</button>
